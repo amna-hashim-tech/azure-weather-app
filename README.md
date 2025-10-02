@@ -1,11 +1,11 @@
-# 🌦️ Azure Weather App
+#  Azure Weather App
 
 A simple **serverless weather app** built with **Azure Functions (Python)** and **Azure Static Website Hosting**.  
 It fetches live weather data from the **OpenWeather API** and displays it in a clean, responsive UI.  
 
 ---
 
-## 🚀 Live Demo
+## Live Demo
 👉 [View App](https://amnaweatherstore123.z13.web.core.windows.net/)  
 
 ---
@@ -26,19 +26,7 @@ It fetches live weather data from the **OpenWeather API** and displays it in a c
 - **API:** [OpenWeather](https://openweathermap.org)
 - **Hosting:** Azure Storage Static Website
 
----
 
-## 📸 Screenshots
-
-### 🌤️ London Example
-![Weather App - London](screenshots/london.png)
-
-### ☀️ Dubai Example
-![Weather App - Dubai](screenshots/dubai.png)
-
-*(Add screenshots in a `screenshots/` folder and update links above)*
-
----
 
 ## ⚙️ Setup & Run Locally
 
