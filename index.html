@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Weather App</title>
+  <style>
+    body { 
+      font-family: Arial, sans-serif; 
+      text-align: center; 
+      margin-top: 50px; 
+      background: linear-gradient(to top, #89f7fe, #66a6ff); 
+      height: 100vh;
+    }
+    h1 {
+      color: #222;
+    }
+    input { 
+      padding: 10px; 
+      width: 200px; 
+      border: 1px solid #ccc; 
+      border-radius: 4px;
+    }
+    button { 
+      padding: 10px 15px; 
+      margin-left: 5px; 
+      border: none; 
+      background: #0078d7; 
+      color: white; 
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    button:hover {
+      background: #005a9e;
+    }
+    .result { 
+      margin-top: 20px; 
+      font-size: 22px; 
+      font-weight: bold;
+      color: #333;
+    }
+    img {
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Weather App</h1>
+  <input type="text" id="city" placeholder="Enter city" />
+  <button onclick="getWeather()">Get Weather</button>
+
+  <div class="result" id="result"></div>
+
+  <script>
+    async function getWeather() {
+      const city = document.getElementById("city").value;
+      if (!city) {
+        document.getElementById("result").innerText = "⚠️ Please enter a city.";
+        return;
+      }
+
+      const url = `https://amnaweatherfunc123.azurewebsites.net/api/weather?city=${city}`;
+      try {
+        const response = await fetch(url);
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          document.getElementById("result").innerText = `⚠️ ${errorData.message}`;
+          return;
+        }
+
+        const data = await response.json();
+        const iconUrl = `https://openweathermap.org/img/wn/${data.icon || "01d"}@2x.png`;
+
+        document.getElementById("result").innerHTML = 
+          `<img src="${iconUrl}" alt="Weather Icon"><br>${data.city}: ${data.temperature}°C, ${data.description}`;
+      } catch (err) {
+        document.getElementById("result").innerText = "⚠️ Error fetching weather.";
+      }
+    }
+
+    // Auto-detect user location
+    window.onload = function() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(async function(position) {
+          const lat = position.coords.latitude;
+          const lon = position.coords.longitude;
+          const url = `https://amnaweatherfunc123.azurewebsites.net/api/weather?lat=${lat}&lon=${lon}`;
+          try {
+            const response = await fetch(url);
+            if (!response.ok) return;
+            const data = await response.json();
+            const iconUrl = `https://openweathermap.org/img/wn/${data.icon || "01d"}@2x.png`;
+            document.getElementById("result").innerHTML = 
+              `<img src="${iconUrl}" alt="Weather Icon"><br>${data.city}: ${data.temperature}°C, ${data.description}`;
+          } catch (err) {
+            document.getElementById("result").innerText = "⚠️ Unable to fetch location weather.";
+          }
+        });
+      }
+    };
+  </script>
+</body>
+</html>
