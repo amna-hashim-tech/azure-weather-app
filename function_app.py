@@ -6,7 +6,10 @@ import json
 app = func.FunctionApp(http_auth_level=func.AuthLevel.ANONYMOUS)
 
 # Your OpenWeather API Key
-API_KEY = "5ce6adb1704999584e36f97796596659"
+import os
+
+API_KEY = os.getenv("OPENWEATHER_API_KEY")
+
 BASE_URL = "http://api.openweathermap.org/data/2.5/weather"
 
 @app.function_name(name="WeatherFunction")
